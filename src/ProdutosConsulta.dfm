@@ -239,17 +239,17 @@ object FProdutosConsulta: TFProdutosConsulta
     Align = alTop
     Caption = ' Fil&tro '
     TabOrder = 2
-    object lbNome: TLabel
+    object lbDescricao: TLabel
       Left = 8
       Top = 20
-      Width = 28
+      Width = 48
       Height = 13
-      Caption = 'Nome'
+      Caption = 'Descri'#231#227'o'
     end
     object edDescricao: TEdit
-      Left = 48
+      Left = 59
       Top = 14
-      Width = 500
+      Width = 491
       Height = 21
       TabOrder = 0
     end

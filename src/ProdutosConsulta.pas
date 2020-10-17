@@ -22,7 +22,7 @@ type
     btEditar: TSpeedButton;
     pnlDivisor: TPanel;
     grbFiltro: TGroupBox;
-    lbNome: TLabel;
+    lbDescricao: TLabel;
     edDescricao: TEdit;
     btnFiltrar: TButton;
     sdsProdutosPRODUTO_ID: TIntegerField;

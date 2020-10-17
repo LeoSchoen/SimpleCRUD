@@ -15,12 +15,13 @@ type
 
   function CarregaIni: Boolean;
   procedure AbreConexaoDB;
-  procedure ConfiguraDB;
+  function ConfiguraDB: Boolean;
   function SimpleCrudSQLConnection: TSQLConnection;
 
 implementation
 
 var Conexao: TConexao;
+    conexaoFalhou: Boolean;
 
 function CarregaIni: Boolean;
 var configIni : TIniFile;
@@ -28,26 +29,28 @@ var configIni : TIniFile;
 begin
   Result := False;
   caminhoConfigIni := ChangeFileExt(ExtractFilePath(Application.ExeName),'Config.ini');
-  if FileExists(caminhoConfigIni) then
+  // Se o aquivo config nao existe, ou a conexão anterior falhou, abre a tela pra gerar o Config
+  if (not FileExists(caminhoConfigIni)) or (conexaoFalhou) then
   begin
-    configIni := TIniFile.Create(caminhoConfigIni) ;
-    try
-      Conexao.banco := configIni.ReadString('CONNECTION','Database','');
-      Conexao.usuario := configIni.ReadString('CONNECTION','User_Name','');
-      Conexao.senha := configIni.ReadString('CONNECTION','Password','');
-    finally
-      configIni.Free;
-      Result := True;
-    end;
-  end
-  else
-  begin
-    Result := not ConfiguraConfigIni;
+    conexaoFalhou := False;
+    Result := ConfiguraConfigIni;
+  end;
+  // Carregando String de Conexão com Banco de Dados
+  configIni := TIniFile.Create(caminhoConfigIni) ;
+  try
+    Conexao.servdor := configIni.ReadString('CONNECTION','Server','');
+    Conexao.banco := configIni.ReadString('CONNECTION','Database','');
+    Conexao.usuario := configIni.ReadString('CONNECTION','User_Name','');
+    Conexao.senha := configIni.ReadString('CONNECTION','Password','');
+  finally
+    configIni.Free;
+    Result := True;
   end;
 end;
 
-procedure ConfiguraDB;
+function ConfiguraDB: Boolean;
 begin
+  Result := False;
   if Assigned(DMConexaoDB.SQLConnection) then
   begin
     DMConexaoDB.SQLConnection.DriverName := 'Interbase';
@@ -67,7 +70,13 @@ begin
     DMConexaoDB.SQLConnection.Params.Values['WaitOnLocks'] := 'True';
     DMConexaoDB.SQLConnection.Params.Values['Interbase TransIsolation'] := 'ReadCommited';
     DMConexaoDB.SQLConnection.Params.Values['Trim Char'] := 'False';
-    DMConexaoDB.SQLConnection.Open;
+    try
+      DMConexaoDB.SQLConnection.Open;
+      Result := True;
+    except
+      conexaoFalhou := True;
+      Result := False;
+    end;
   end;
 end;
 
@@ -75,12 +84,10 @@ procedure AbreConexaoDB;
 var dbConfigurado: Boolean;
 begin
   dbConfigurado := false;
+  conexaoFalhou := false;
   repeat
     if CarregaIni then
-    begin
-      ConfiguraDB;
-      dbConfigurado := True;
-    end;
+      dbConfigurado := ConfiguraDB;
   until dbConfigurado;
 end;
 

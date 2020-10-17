@@ -26,7 +26,6 @@ object DMConexaoDB: TDMConexaoDB
       'Interbase TransIsolation=ReadCommited'
       'Trim Char=False')
     VendorLib = 'gds32.dll'
-    Connected = True
     Left = 64
     Top = 16
   end

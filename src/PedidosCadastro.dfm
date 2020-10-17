@@ -58,7 +58,7 @@ object FPedidosCadastro: TFPedidosCadastro
     Top = 12
     Width = 37
     Height = 13
-    Caption = 'Numero'
+    Caption = 'N'#250'mero'
   end
   object lbDataEmissao: TLabel
     Left = 294

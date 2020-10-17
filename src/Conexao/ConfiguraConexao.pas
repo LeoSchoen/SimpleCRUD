@@ -23,8 +23,10 @@ type
     procedure btBancoClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    procedure CarregaArquivoConfig;
   public
     { Public declarations }
     retorno: Boolean;
@@ -120,7 +122,30 @@ end;
 procedure TFConfiguraConexao.btnCancelarClick(Sender: TObject);
 begin
   retorno := false;
-  Close;
+  Application.Terminate;
+  Halt;
+end;
+
+procedure TFConfiguraConexao.CarregaArquivoConfig;
+var configIni : TIniFile;
+  caminhoConfigIni: string;
+begin
+  caminhoConfigIni := ChangeFileExt(ExtractFilePath(Application.ExeName),'Config.ini');
+  configIni := TIniFile.Create(caminhoConfigIni) ;
+  try
+    edServidor.Text := configIni.ReadString('CONNECTION','Server','');
+    edBanco.Text := configIni.ReadString('CONNECTION','Database','');
+    edUsuario.Text := configIni.ReadString('CONNECTION','User_Name','');
+    edSenha.Text := configIni.ReadString('CONNECTION','Password','');
+  finally
+    FreeAndNil(configIni)
+  end;
+end;
+
+procedure TFConfiguraConexao.FormShow(Sender: TObject);
+begin
+  if FileExists(ChangeFileExt(ExtractFilePath(Application.ExeName),'Config.ini')) then
+    CarregaArquivoConfig;
 end;
 
 end.

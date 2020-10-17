@@ -1617,7 +1617,7 @@ object FAbout: TFAbout
         'Crud simples desenvolvido em Delphi 7 com Firebird 2.5.'
         'Conex'#227'o com banco com dbExpress e DBClient.'
         'Conex'#227'o REST para consulta de CEP com Indy10.'
-        'Estrutura ORM simples de densenvolvimento pr'#243'prio.'
+        'Estrutura ORM simples de desenvolvimento pr'#243'prio.'
         ''
         'Leandro Schoen')
       ReadOnly = True
