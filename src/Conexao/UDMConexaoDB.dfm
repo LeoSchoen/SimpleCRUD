@@ -11,7 +11,7 @@ object DMConexaoDB: TDMConexaoDB
     LibraryName = 'dbexpint.dll'
     LoginPrompt = False
     Params.Strings = (
-      'DriverName=Interbase'
+      'DriverName=Firebird'
       'Database=127.0.0.1:G:\dev\agrotis\SimpleCrud\db\BASE.FDB'
       'RoleName=RoleName'
       'User_Name=sysdba'

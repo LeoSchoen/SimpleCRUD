@@ -20,6 +20,10 @@ type
     btBanco: TSpeedButton;
     lbServidor: TLabel;
     edServidor: TEdit;
+    lbVendorLib: TLabel;
+    Label2: TLabel;
+    edVendorLib: TEdit;
+    edLiberName: TEdit;
     procedure btBancoClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
@@ -112,6 +116,8 @@ begin
     configIni.WriteString('CONNECTION','Database', edBanco.Text);
     configIni.WriteString('CONNECTION','User_Name', edUsuario.Text);
     configIni.WriteString('CONNECTION','Password', edSenha.Text);
+    configIni.WriteString('CONNECTION','LiberName', edLiberName.Text);
+    configIni.WriteString('CONNECTION','VendorLib', edVendorLib.Text);
   finally
     configIni.Free;
     retorno := True;
@@ -137,6 +143,8 @@ begin
     edBanco.Text := configIni.ReadString('CONNECTION','Database','');
     edUsuario.Text := configIni.ReadString('CONNECTION','User_Name','');
     edSenha.Text := configIni.ReadString('CONNECTION','Password','');
+    edLiberName.Text := configIni.ReadString('CONNECTION','LiberName','');
+    edVendorLib.Text := configIni.ReadString('CONNECTION','VendorLib','');
   finally
     FreeAndNil(configIni)
   end;
