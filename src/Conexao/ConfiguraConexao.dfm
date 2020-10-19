@@ -114,7 +114,7 @@ object FConfiguraConexao: TFConfiguraConexao
     Height = 3
     Anchors = [akLeft, akBottom]
     BevelOuter = bvLowered
-    TabOrder = 4
+    TabOrder = 6
   end
   object edServidor: TEdit
     Left = 99
@@ -135,6 +135,6 @@ object FConfiguraConexao: TFConfiguraConexao
     Top = 109
     Width = 398
     Height = 21
-    TabOrder = 6
+    TabOrder = 4
   end
 end

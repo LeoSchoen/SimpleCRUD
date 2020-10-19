@@ -3,7 +3,7 @@ unit ConexaoDB;
 interface
 
 uses
-  Forms, Dialogs, inifiles, SysUtils, DBXpress, DB, SqlExpr, UDMConexaoDB, ConfiguraConexao;
+  Forms, Dialogs, Controls, inifiles, SysUtils, DBXpress, DB, SqlExpr, UDMConexaoDB, ConfiguraConexao;
 
 type
   TConexao = record
@@ -82,8 +82,24 @@ begin
       DMConexaoDB.SQLConnection.Open;
       Result := True;
     except
-      conexaoFalhou := True;
-      Result := False;
+      on e: exception do
+      begin
+        if MessageDlg('Não foi possivel conectar ao banco de dados: Erro'
+          + #13#10
+          + e.message
+          + #13#10#13#10'Deseja alterar a configuração?',  mtCustom,
+          [mbYes, mbNo], 0) = mrYes
+        then
+        begin
+          conexaoFalhou := True;
+          Result := False;
+        end
+        else
+        begin
+          Application.Terminate;
+          Halt;
+        end;
+      end;
     end;
   end;
 end;
